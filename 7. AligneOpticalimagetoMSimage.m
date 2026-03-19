@@ -43,7 +43,6 @@ aspectRatio = size(resizedOpticalImage, 2) / size(resizedOpticalImage, 1);
 initWidth = 100;  
 initHeight = initWidth / aspectRatio;  
 
-constraintFcn = makeConstrainToRectFcn('imrect', [0, backgroundWidth], [0, backgroundHeight]);
 hRect = imrect(gca, [50, 50, initWidth, initHeight]);  
 setPositionConstraintFcn(hRect, @(pos) fixedAspectRatio(pos, aspectRatio)); 
 
@@ -103,8 +102,6 @@ function loadMROIToRect(hRect, maxX, maxY, ionOffsetX, ionOffsetY)
     scaledY = (yCoords / 500) * maxY;  
 
    
-    scaledCoords = [scaledX, scaledY];  
-
     %
     pos = getPosition(hRect);  
     rectX = pos(1);  
