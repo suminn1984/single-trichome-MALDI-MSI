@@ -1,31 +1,68 @@
 # Single-Trichome MALDI-MSI Registration Workflow
 
-MATLAB-based workflow for spatial registration of isolated Arabidopsis trichomes in single-trichome MALDI-MSI analysis.
+A MATLAB-based step-by-step workflow for spatial registration and the extraction of the pixels of isolated trichomes of Arabidopsis thaliana in MALDI-MS image. 
 
 ## Overview
-This repository contains MATLAB scripts developed for single-trichome MALDI-MSI data processing and spatial registration. 
+This repository contains MATLAB scripts developed for spatial registration of optical image and MALDI-MS image. 
+The workflow utilizes pre- and post-MALDI optical images, ROI coordinate transformation, laser-ablation-mark-based registration, and MALDI-MS ion image alignment. The scripts are organized as sequential steps and should be executed in numerical order.
+
 
 ## Main functions
 1. Extraction of trichome coordinates from pre-MALDI optical images
 2. Automatic trichome segmentation and manual point-by-point ROI selection
 3. Registration of trichome ROIs from pre-MALDI to post-MALDI optical images
 4. Alignment of the MS acquisition area using laser-ablation marks as fiducial markers
-5. Pixel-level extraction of trichome-associated ion intensities
-6. Generation of ion images and downstream analysis outputs
+5. The extraction of trichome-associated pixels that are used for data processing. 
+
+
+## Workflow Scripts
+
+The scripts in the `code/` folder should be run sequentially in numerical order.  
+Each script performs one stage of the workflow, and the output from one step is used as the input for the next step.
+
+1. `1. mROI_paper.m`  
+   Selects trichome ROIs from the pre-MALDI optical image using automatic segmentation or manual polygon selection, and exports ROI coordinates.
+
+2. `2. Affine_transform.m`  
+   Performs affine transformation to register pre-MALDI and post-MALDI optical images using user-defined landmarks.
+
+3. `3. plotTransformedCoordinatesOnImage.m`  
+   Plots transformed ROI coordinates on the registered optical image for visual inspection.
+
+4. `4. Fourth_imageandmROI.m`  
+   Uses laser-ablation marks and transformed ROIs to define the acquisition region and refine coordinate alignment.
+
+5. `5. javaadding (Reading imzML files in MATLAB).m`  
+   Adds the required Java-based imzML parser and prepares MATLAB for reading imzML files.
+
+6. `6. MS_imagegen.m`  
+   Generates MALDI-MS ion images from imzML data for selected m/z values.
+
+7. `7. AligneOpticalimagetoMSimage.m`  
+   Aligns the optical image to the MALDI-MS image and projects ROI coordinates into the MS image coordinate space for final pixel-level extraction.
 
 ## Contents
-- `code/`: MATLAB scripts used for spatial registration and data analysis
-- `example_data/`: example input files for the registration workflow
+- `code/`  
+  MATLAB scripts for ROI selection, image registration, coordinate transformation, MS image generation, 
+  and optical-to-MS alignment.
+
+- `example_data/`  
+  Example input files for testing the workflow.
 
 ## Requirements
 - MATLAB R2024b
-- imzML parser (`jimzMLConverter-2.1.1`)
+- Java-based imzML parser (`jimzMLConverter-2.1.1` or compatible)
+- Pre-MALDI optical image (Pre-MALDI optical image of isolated trichomes)
+- Post-MALDI optical image (Laser-ablation marks used as fiducial markers)
 - ROI coordinate files (`.csv`)
-- Pre- and post-MALDI optical images
-- MALDI-MS ion image data
+- imzML data file - imzML files for ion image generation
+
 
 ## System environment
-Windows 11 Home (64-bit; version 25H2, OS build 26200.8037) running on a laptop equipped with an Intel® Core™ i7-14650HX CPU (2.20 GHz), 32 GB RAM, and an NVIDIA GeForce RTX 4060 GPU.
+Windows 11 Home  
+a laptop equipped with an Intel® Core™ i7-14650HX CPU (2.20 GHz), 
+32 GB RAM, 
+NVIDIA GeForce RTX 4060 GPU.
 
 ## Usage
 1. Load the pre-MALDI optical image
