@@ -60,12 +60,12 @@ Each script performs one stage of the workflow, and the output from one step is 
 
 
 ## System environment
-Windows 11 Home  
-a laptop equipped with an Intel® Core™ i7-14650HX CPU (2.20 GHz), 
-32 GB RAM, 
-NVIDIA GeForce RTX 4060 GPU.
+The workflow was developed and tested in MATLAB R2024b on Windows 11.  
+Reading imzML files in MATLAB requires a Java-based imzML parser 
+(e.g., `jimzMLConverter-2.1.1` or a compatible version).
 
 ## Usage
+The scripts in the `code/` folder should be executed sequentially in numerical order. The output from one step is used as the input for the next step.
 1. Load the pre-MALDI optical image
 2. Detect trichomes automatically or define ROIs manually
 3. Load the post-MALDI optical image
