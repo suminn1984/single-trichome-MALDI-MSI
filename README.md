@@ -17,30 +17,31 @@ The workflow utilizes pre- and post-MALDI optical images, ROI coordinate transfo
 
 ## Workflow Scripts
 
-The scripts in the `code/` folder should be run sequentially in numerical order.  
+The scripts in the `code/` folder should be executed sequentially in numerical order.  
 Each script performs one stage of the workflow, and the output from one step is used as the input for the next step.
 
-1. `1. mROI_paper.m`  
-   Selects trichome ROIs from the pre-MALDI optical image using automatic segmentation or manual polygon selection, and exports ROI coordinates.
+`1. mROI_selection.m`  
+   Selects trichome ROIs from the pre-MALDI optical image using either manual polygon selection or automatic selection of mROI => saved csv file => region1
 
-2. `2. Affine_transform.m`  
-   Performs affine transformation to register pre-MALDI and post-MALDI optical images using user-defined landmarks.
+`2. affine_transform_pre_to_post.m`  
+   Performs affine transformation to register the pre-MALDI optical image to the post-MALDI optical image using 5 landmark points. => saved scv file => region2
 
-3. `3. plotTransformedCoordinatesOnImage.m`  
-   Plots transformed ROI coordinates on the registered optical image for visual inspection.
+`3. overlay_transformed_mROI_on_post_image.m`  
+   Displays the transformed mROI coordinates overlaid on the post-MALDI optical image for visual inspection of the registration result. => saved scv file => region3
 
-4. `4. Fourth_imageandmROI.m`  
-   Uses laser-ablation marks and transformed ROIs to define the acquisition region and refine coordinate alignment.
+`4. register_laser_marks_and_mROI.m`  
+   Uses laser-ablation marks in post-MALDI optical image and transformed mROI coordinates to define and refine the acquisition region for downstream alignment. => saved scv file and optical image => region4 and R4 image file. 
 
-5. `5. javaadding (Reading imzML files in MATLAB).m`  
-   Adds the required Java-based imzML parser and prepares MATLAB for reading imzML files.
+`5. setup_imzML_java_parser.m`  
+   Adds and initializes the Java-based imzML parser required for reading imzML files in MATLAB.
 
-6. `6. MS_imagegen.m`  
+`6. generate_MS_image_from_imzML.m`  
    Generates MALDI-MS ion images from imzML data for selected m/z values.
 
-7. `7. AligneOpticalimagetoMSimage.m`  
-   Aligns the optical image to the MALDI-MS image and projects ROI coordinates into the MS image coordinate space for final pixel-level extraction.
+`7. align_optical_to_MS_image.m`  
+   Aligns the optical image to the MALDI-MS image and projects mROI coordinates into the MS image space for final pixel-level extraction.
 
+   
 ## Contents
 - `code/`  
   MATLAB scripts for ROI selection, image registration, coordinate transformation, MS image generation, 
