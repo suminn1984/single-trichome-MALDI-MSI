@@ -1,6 +1,9 @@
 # This script performs Gaussian mixture model (GMM) clustering
 # using raw DS and K ion abundances.
 # Install and load the mclust package for GMM clustering
+# df_all should be a combined trichome-level abundance table
+# generated from the region-level TIC-normalized output files.
+
 if (!requireNamespace("mclust", quietly = TRUE)) install.packages("mclust")
 library(mclust)
 
