@@ -1,5 +1,8 @@
 #Extract m/z values from each scan/pixel
+library(Cardinal)
 
+imzml_path <- "D:/2025/May/May/feronia4_4.imzML"
+msi <- readMSIData(imzml_path)
 mz_list <- mz(msi)
 nscan <- length(mz_list) # Number of scans/pixels
 # we set bin width for m/z binning, and they are rounded to nearst bins
